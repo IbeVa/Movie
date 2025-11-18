@@ -8,17 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State var loading = true
+    @Environment(MovieDataStore.self) var movieDataStore
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            if loading {
+                ProgressView("Loading...")
+            }else {
+                
+            }
+        }.task {
+            await movieDataStore.loadData()
+            loading = false
         }
-        .padding()
     }
 }
 
-#Preview {
-    ContentView()
-}
