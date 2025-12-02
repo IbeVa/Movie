@@ -11,4 +11,10 @@ import Foundation
 class PathStore{
     var path = [Route]()
     
+    func clear(){
+        path.removeAll()
+    }
+    func reduceArray(index: Int){
+        path = Array(path.prefix(index + 1))
+    }
 }

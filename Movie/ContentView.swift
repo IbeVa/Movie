@@ -15,7 +15,7 @@ struct ContentView: View {
             if loading {
                 ProgressView("Loading...")
             }else {
-                
+                MoviesView()
             }
         }.task {
             await movieDataStore.loadData()

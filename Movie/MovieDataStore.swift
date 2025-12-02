@@ -20,20 +20,38 @@ class MovieDataStore {
     func getMovies() -> [Movie] {
         return movies.movies
     }
-    /*
+    
     func getMovies(actor: Actor) -> [Movie] {
+        let movies = getMovies()
         
+        let newArray = movies.filter { movie in
+            return movie.actors.contains(where: { $0.firstName == actor.firstName && $0.lastName == actor.lastName })
+        }
+        
+        return newArray
     }
     
     func getMovies(director: Director) -> [Movie] {
+        let movies = getMovies()
         
+        let newArray = movies.filter { movie in
+            return movie.director.firstName == director.firstName && movie.director.lastName == director.lastName
+        }
+        
+        return newArray
     }
     
-    func getACtors(director: Director) -> [Actor] {
+    func getActors(director: Director) -> [Actor] {
+        let movies = getMovies(director: director)
+        var actors: [Actor] = []
+        for movie in movies {
+            actors.append(contentsOf: movie.actors)
+        }
         
+        return actors
     }
     
-     **/
+    
     private func sort() {
         movies.movies.sort { movie1, movie2 in
             return movie1.title < movie2.title
@@ -45,7 +63,8 @@ class MovieDataStore {
         do {
             print("⏳ Simulating 2-second load delay...")
             try await Task.sleep(for: .seconds(2)) // Simulate long load
-            movies.movies = load("movies.json")
+            let data : Movies = load("movies.json")
+            movies.movies = data.movies
             sort()
             print("✅ Data loaded successfully.")
             
